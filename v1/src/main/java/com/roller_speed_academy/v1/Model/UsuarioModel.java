@@ -10,17 +10,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name ="tbl_usuarios")
+@Table(name = "tbl_usuarios")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class UsuarioModel {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long IdUsuario;
+    private Long idUsuario;
     
-    String NombreUsuario;
-    String Contrasena;
+    private String nombreUsuario;
     
+    private String contrasena;
 }
