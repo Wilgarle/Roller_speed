@@ -1,0 +1,33 @@
+package com.roller_speed_academy.v1.Exception;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+import java.util.Map;
+
+/**
+ * Clase para estructurar las respuestas de error de la API
+ * Aplica el principio de Responsabilidad Única (SRP) - SOLID
+ */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ErrorResponse {
+    
+    private LocalDateTime timestamp;
+    private int status;
+    private String error;
+    private String message;
+    private String path;
+    private Map<String, String> validationErrors;
+    
+    public ErrorResponse(LocalDateTime timestamp, int status, String error, String message, String path) {
+        this.timestamp = timestamp;
+        this.status = status;
+        this.error = error;
+        this.message = message;
+        this.path = path;
+    }
+}
