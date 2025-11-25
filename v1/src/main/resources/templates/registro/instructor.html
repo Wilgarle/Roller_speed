@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="es" data-theme="light" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Inscripción de Instructores — Roller Speed</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="/img/logo.png" type="image/png" />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <nav class="container nav" aria-label="Principal">
+      <a class="brand" href="/">
+        <img src="/img/logo.png" alt="Roller Speed" width="32" height="32" />
+        <span>Roller Speed</span>
+      </a>
+      <button class="hamburger" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="menu">
+        <li class="has-dropdown">
+          <button class="link dropdown-toggle">Corporativo ▼</button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/mision">Misión</a></li>
+            <li><a class="dropdown-item" href="/vision">Visión</a></li>
+            <li><a class="dropdown-item" href="/valores">Valores</a></li>
+            <li><a class="dropdown-item" href="/servicios">Servicios</a></li>
+          </ul>
+        </li>
+        <li><a class="link" href="/eventos">Eventos</a></li>
+        <li class="has-dropdown">
+          <button class="link dropdown-toggle">📝 Registro ▼</button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/registro/estudiante">Inscripción Estudiantes</a></li>
+            <li><a class="dropdown-item" href="/registro/instructor">Inscripción Instructores</a></li>
+          </ul>
+        </li>
+        <li class="has-dropdown">
+          <button class="link dropdown-toggle">👥 Clases ▼</button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/clases/estudiantes">Listar Estudiantes</a></li>
+            <li class="dropdown-divider"></li>
+            <li class="dropdown-header">Horarios</li>
+            <li><a class="dropdown-item" href="/clases/horario/estudiantes">Estudiantes</a></li>
+            <li><a class="dropdown-item" href="/clases/horario/instructores">Instructores</a></li>
+          </ul>
+        </li>
+        <li class="divider" aria-hidden="true"></li>
+        <li><button class="btn-ghost" id="themeToggle" aria-label="Cambiar tema">🌓</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="container section">
+      <header class="section__header">
+        <h1 class="section__title">👨‍🏫 Inscripción de Instructores</h1>
+        <p class="muted">Completa el formulario para unirte a nuestro equipo de instructores</p>
+      </header>
+
+      <!-- Mensaje de éxito o error -->
+      <div th:if="${mensaje}" 
+           th:class="${tipo == 'success' ? 'alert alert-success' : 'alert alert-error'}" 
+           style="padding: 1rem; margin-bottom: 2rem; border-radius: 8px; background: #d4edda; color: #155724; border: 1px solid #c3e6cb;">
+        <p th:text="${mensaje}" style="margin: 0;"></p>
+      </div>
+
+      <form th:action="@{/registro/instructor}" th:object="${instructor}" method="post" class="form-card">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="nombre" class="form-label">Nombre *</label>
+            <input type="text" id="nombre" th:field="*{nombre}" class="form-input" required 
+                   placeholder="Ej: María" />
+          </div>
+
+          <div class="form-group">
+            <label for="apellido" class="form-label">Apellido *</label>
+            <input type="text" id="apellido" th:field="*{apellido}" class="form-input" required 
+                   placeholder="Ej: García" />
+          </div>
+
+          <div class="form-group">
+            <label for="email" class="form-label">Correo Electrónico *</label>
+            <input type="email" id="email" th:field="*{email}" class="form-input" required 
+                   placeholder="correo@ejemplo.com" />
+          </div>
+
+          <div class="form-group">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input type="tel" id="telefono" th:field="*{telefono}" class="form-input" 
+                   placeholder="300 123 4567" />
+          </div>
+
+          <div class="form-group">
+            <label for="especialidad" class="form-label">Especialidad *</label>
+            <select id="especialidad" th:field="*{especialidad}" class="form-input" required>
+              <option value="">Selecciona una especialidad</option>
+              <option value="Velocidad">Velocidad</option>
+              <option value="Hockey">Hockey</option>
+              <option value="Artístico">Artístico</option>
+              <option value="Freestyle">Freestyle</option>
+              <option value="General">General</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="experienciaAnos" class="form-label">Años de Experiencia</label>
+            <input type="number" id="experienciaAnos" th:field="*{experienciaAnos}" 
+                   class="form-input" min="0" placeholder="Ej: 5" />
+          </div>
+
+          <div class="form-group">
+            <label for="claseAsignada" class="form-label">Clase Asignada *</label>
+            <select id="claseAsignada" th:field="*{claseAsignada}" class="form-input" required>
+              <option value="">Selecciona una clase</option>
+              <option value="Grupo Principiantes A">Grupo Principiantes A</option>
+              <option value="Grupo Principiantes B">Grupo Principiantes B</option>
+              <option value="Grupo Principiantes C">Grupo Principiantes C</option>
+              <option value="Clínica Especial">Clínica Especial</option>
+              <option value="Grupos Intermedios">Grupos Intermedios</option>
+              <option value="Entrenamiento Velocidad">Entrenamiento Velocidad</option>
+              <option value="Grupos Avanzados y Competición">Grupos Avanzados y Competición</option>
+              <option value="Supervisión Práctica Libre">Supervisión Práctica Libre</option>
+              <option value="Clases Infantiles">Clases Infantiles</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="diaSemana" class="form-label">Día de la Semana *</label>
+            <select id="diaSemana" th:field="*{diaSemana}" class="form-input" required>
+              <option value="">Selecciona un día</option>
+              <option value="Lunes">Lunes</option>
+              <option value="Martes">Martes</option>
+              <option value="Miércoles">Miércoles</option>
+              <option value="Jueves">Jueves</option>
+              <option value="Viernes">Viernes</option>
+              <option value="Sábado">Sábado</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="horario" class="form-label">Horario *</label>
+            <select id="horario" th:field="*{horario}" class="form-input" required>
+              <option value="">Selecciona un horario</option>
+              <option value="08:00 - 10:00">08:00 - 10:00</option>
+              <option value="10:00 - 12:00">10:00 - 12:00</option>
+              <option value="14:00 - 16:00">14:00 - 16:00</option>
+              <option value="16:00 - 18:00">16:00 - 18:00</option>
+            </select>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="certificaciones" class="form-label">Certificaciones</label>
+            <textarea id="certificaciones" th:field="*{certificaciones}" class="form-input" 
+                      rows="3" placeholder="Ej: Certificado Nacional de Patinaje, Curso de Primeros Auxilios..."></textarea>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn">✅ Registrar Instructor</button>
+          <a href="/" class="btn btn-outline">Cancelar</a>
+        </div>
+      </form>
+
+      <div class="info-box" style="margin-top: 2rem; padding: 1.5rem; background: #f8f9fa; border-radius: 8px;">
+        <h3 style="margin-top: 0;">ℹ️ Información para Instructores</h3>
+        <ul style="margin: 0; padding-left: 1.5rem;">
+          <li>Los campos con (*) son obligatorios</li>
+          <li>El email debe ser único para cada instructor</li>
+          <li>Las certificaciones son opcionales pero recomendadas</li>
+          <li>Una vez registrado, el equipo te contactará para completar el proceso</li>
+          <li>Puedes consultar el horario en <a href="/clases/horario/instructores">Horario Instructores</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container footer">
+    <p>© 2025 Roller Speed · Escuela de Patinaje</p>
+  </footer>
+
+  <style>
+    .form-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .full-width {
+      grid-column: 1 / -1;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+    .form-label {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #333;
+    }
+    .form-input {
+      padding: 0.75rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+      font-family: 'Poppins', sans-serif;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: #2196F3;
+    }
+    textarea.form-input {
+      resize: vertical;
+      min-height: 80px;
+    }
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+    .alert {
+      animation: slideDown 0.3s ease-out;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .alert-error {
+      background: #f8d7da !important;
+      color: #721c24 !important;
+      border-color: #f5c6cb !important;
+    }
+  </style>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>
