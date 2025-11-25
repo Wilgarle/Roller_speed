@@ -86,3 +86,27 @@ body{margin:0; font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Arial
 .menu{position:fixed; top:60px; right:16px; left:16px; background:var(--surface); border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow); padding:10px; display:none; flex-direction:column;} 
 
 .menu.open{display:flex;}}
+
+/* Dropdown Menu Styles */
+.has-dropdown{position:relative;}
+
+.dropdown-toggle{background:none; border:none; cursor:pointer; padding:10px 12px; font-size:1rem; font-family:inherit; color:var(--text); border-radius:12px;}
+
+.dropdown-toggle:hover{background:color-mix(in oklab, var(--primary) 12%, transparent);}
+
+.dropdown-menu{display:none; position:absolute; top:100%; left:0; background:var(--surface); box-shadow:0 4px 12px rgba(0,0,0,0.15); border:1px solid var(--line); border-radius:12px; padding:0.5rem 0; min-width:200px; z-index:1000; list-style:none; margin:0.5rem 0 0 0;}
+
+.has-dropdown.open .dropdown-menu{display:block;}
+
+.dropdown-item{display:block; padding:0.5rem 1rem; color:var(--text); text-decoration:none; transition:background 0.2s;}
+
+.dropdown-item:hover{background:color-mix(in oklab, var(--primary) 12%, transparent);}
+
+.dropdown-divider{height:1px; background:var(--line); margin:0.5rem 0;}
+
+.dropdown-header{padding:0.5rem 1rem; font-size:0.875rem; font-weight:600; color:var(--muted); text-transform:uppercase;}
+
+@media (max-width:720px){
+  .has-dropdown .dropdown-menu{position:static; box-shadow:none; border:none; padding-left:1rem; margin-top:0.5rem;}
+  .dropdown-toggle{width:100%; text-align:left;}
+}

@@ -17,4 +17,31 @@
       a.classList.add('active'); 
     } 
   });
+
+  // Dropdown functionality
+  const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+  dropdownToggles.forEach(toggle => {
+    toggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const parent = this.parentElement;
+      const isOpen = parent.classList.contains('open');
+      
+      // Close all dropdowns
+      document.querySelectorAll('.has-dropdown').forEach(item => {
+        item.classList.remove('open');
+      });
+      
+      // Open current if it was closed
+      if (!isOpen) {
+        parent.classList.add('open');
+      }
+    });
+  });
+  
+  // Close dropdown when clicking outside
+  document.addEventListener('click', function() {
+    document.querySelectorAll('.has-dropdown').forEach(item => {
+      item.classList.remove('open');
+    });
+  });
 })();
