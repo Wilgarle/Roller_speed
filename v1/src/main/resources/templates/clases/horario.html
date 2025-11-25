@@ -1,0 +1,761 @@
+<!doctype html>
+<html lang="es" data-theme="light" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title th:text="${titulo}">Horario de Clases — Roller Speed</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="/img/logo.png" type="image/png" />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <nav class="container nav" aria-label="Principal">
+      <a class="brand" href="/">
+        <img src="/img/logo.png" alt="Roller Speed" width="32" height="32" />
+        <span>Roller Speed</span>
+      </a>
+      <button class="hamburger" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="menu">
+        <li class="has-dropdown">
+          <button class="link dropdown-toggle">Corporativo ▼</button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/mision">Misión</a></li>
+            <li><a class="dropdown-item" href="/vision">Visión</a></li>
+            <li><a class="dropdown-item" href="/valores">Valores</a></li>
+            <li><a class="dropdown-item" href="/servicios">Servicios</a></li>
+          </ul>
+        </li>
+        <li><a class="link" href="/eventos">Eventos</a></li>
+        <li class="has-dropdown">
+          <button class="link dropdown-toggle">📝 Registro ▼</button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/registro/estudiante">Inscripción Estudiantes</a></li>
+            <li><a class="dropdown-item" href="/registro/instructor">Inscripción Instructores</a></li>
+          </ul>
+        </li>
+        <li class="has-dropdown">
+          <button class="link dropdown-toggle">👥 Clases ▼</button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/clases/estudiantes">Listar Estudiantes</a></li>
+            <li class="dropdown-divider"></li>
+            <li class="dropdown-header">Horarios</li>
+            <li><a class="dropdown-item" href="/clases/horario/estudiantes">Estudiantes</a></li>
+            <li><a class="dropdown-item" href="/clases/horario/instructores">Instructores</a></li>
+          </ul>
+        </li>
+        <li class="divider" aria-hidden="true"></li>
+        <li><button class="btn-ghost" id="themeToggle" aria-label="Cambiar tema">🌓</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="container section">
+      <header class="section__header">
+        <h1 class="section__title" th:text="${titulo}">📅 Horario de Clases</h1>
+        <p class="muted" th:if="${tipoUsuario == 'estudiante'}">
+          Consulta los horarios disponibles para estudiantes
+        </p>
+        <p class="muted" th:if="${tipoUsuario == 'instructor'}">
+          Horarios de clases para instructores
+        </p>
+      </header>
+
+      <div class="actions-bar">
+        <a href="/clases/horario/estudiantes" class="btn" th:classappend="${tipoUsuario == 'estudiante' ? '' : 'btn-outline'}">
+          👨‍🎓 Estudiantes
+        </a>
+        <a href="/clases/horario/instructores" class="btn" th:classappend="${tipoUsuario == 'instructor' ? '' : 'btn-outline'}">
+          👨‍🏫 Instructores
+        </a>
+        <a href="/clases/estudiantes" class="btn btn-outline">📋 Lista Estudiantes</a>
+      </div>
+
+      <!-- Horario para Estudiantes -->
+      <div th:if="${tipoUsuario == 'estudiante'}" class="schedule-container">
+        <h2 class="schedule-title">🗓️ Horario Semanal - Estudiantes</h2>
+        
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th>Hora</th>
+              <th>Lunes</th>
+              <th>Martes</th>
+              <th>Miércoles</th>
+              <th>Jueves</th>
+              <th>Viernes</th>
+              <th>Sábado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="time-cell">08:00 - 10:00</td>
+              <td class="class-cell nivel-principiante">
+                <strong>Principiantes</strong><br>
+                <small>Pista Principal</small>
+              </td>
+              <td class="empty-cell">-</td>
+              <td class="class-cell nivel-principiante">
+                <strong>Principiantes</strong><br>
+                <small>Pista Principal</small>
+              </td>
+              <td class="empty-cell">-</td>
+              <td class="class-cell nivel-principiante">
+                <strong>Principiantes</strong><br>
+                <small>Pista Principal</small>
+              </td>
+              <td class="class-cell nivel-avanzado">
+                <strong>Clínica Técnica</strong><br>
+                <small>Todos los niveles</small>
+              </td>
+            </tr>
+            <tr>
+              <td class="time-cell">10:00 - 12:00</td>
+              <td class="class-cell nivel-intermedio">
+                <strong>Intermedios</strong><br>
+                <small>Pista Principal</small>
+              </td>
+              <td class="class-cell nivel-intermedio">
+                <strong>Intermedios</strong><br>
+                <small>Pista Principal</small>
+              </td>
+              <td class="class-cell nivel-intermedio">
+                <strong>Intermedios</strong><br>
+                <small>Pista Principal</small>
+              </td>
+              <td class="empty-cell">-</td>
+              <td class="class-cell nivel-intermedio">
+                <strong>Intermedios</strong><br>
+                <small>Pista Principal</small>
+              </td>
+              <td class="class-cell nivel-intermedio">
+                <strong>Velocidad</strong><br>
+                <small>Pista Velocidad</small>
+              </td>
+            </tr>
+            <tr>
+              <td class="time-cell">14:00 - 16:00</td>
+              <td class="class-cell nivel-avanzado">
+                <strong>Avanzados</strong><br>
+                <small>Pista Principal</small>
+              </td>
+              <td class="class-cell nivel-avanzado">
+                <strong>Avanzados</strong><br>
+                <small>Pista Principal</small>
+              </td>
+              <td class="class-cell nivel-avanzado">
+                <strong>Avanzados</strong><br>
+                <small>Pista Principal</small>
+              </td>
+              <td class="class-cell nivel-avanzado">
+                <strong>Avanzados</strong><br>
+                <small>Pista Principal</small>
+              </td>
+              <td class="class-cell nivel-avanzado">
+                <strong>Competición</strong><br>
+                <small>Pista Velocidad</small>
+              </td>
+              <td class="class-cell nivel-principiante">
+                <strong>Práctica Libre</strong><br>
+                <small>Todas las pistas</small>
+              </td>
+            </tr>
+            <tr>
+              <td class="time-cell">16:00 - 18:00</td>
+              <td class="class-cell nivel-principiante">
+                <strong>Infantil</strong><br>
+                <small>Pista Infantil</small>
+              </td>
+              <td class="class-cell nivel-principiante">
+                <strong>Infantil</strong><br>
+                <small>Pista Infantil</small>
+              </td>
+              <td class="class-cell nivel-principiante">
+                <strong>Infantil</strong><br>
+                <small>Pista Infantil</small>
+              </td>
+              <td class="class-cell nivel-principiante">
+                <strong>Infantil</strong><br>
+                <small>Pista Infantil</small>
+              </td>
+              <td class="class-cell nivel-principiante">
+                <strong>Infantil</strong><br>
+                <small>Pista Infantil</small>
+              </td>
+              <td class="empty-cell">-</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Horario para Instructores -->
+      <div th:if="${tipoUsuario == 'instructor'}" class="schedule-container">
+        <h2 class="schedule-title">🗓️ Horario Semanal - Instructores</h2>
+        
+        <!-- Mostrar mensaje si no hay instructores -->
+        <div th:if="${#lists.isEmpty(todosInstructores)}" class="alert alert-info" style="margin-bottom: 1.5rem; padding: 1rem; background: #d1ecf1; border-radius: 8px; color: #0c5460;">
+          <p style="margin: 0;"><strong>ℹ️ No hay instructores registrados.</strong> <a href="/registro/instructor">Registra el primer instructor aquí</a>.</p>
+        </div>
+        
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th>Hora</th>
+              <th>Lunes</th>
+              <th>Martes</th>
+              <th>Miércoles</th>
+              <th>Jueves</th>
+              <th>Viernes</th>
+              <th>Sábado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Horario 08:00 - 10:00 -->
+            <tr>
+              <td class="time-cell">08:00 - 10:00</td>
+              <!-- Lunes -->
+              <td class="class-cell instructor">
+                <th:block th:each="instructor : ${todosInstructores}">
+                  <th:block th:if="${instructor.diaSemana == 'Lunes' && instructor.horario == '08:00 - 10:00'}">
+                    <strong th:text="${instructor.claseAsignada}">Clase</strong><br>
+                    <small>
+                      Instructor: <span th:text="${instructor.nombre + ' ' + instructor.apellido}"></span>
+                      <span th:if="${instructor.especialidad != null}">(<span th:text="${instructor.especialidad}"></span>)</span>
+                    </small>
+                  </th:block>
+                </th:block>
+                <th:block th:if="${#lists.isEmpty(todosInstructores.?[diaSemana == 'Lunes' && horario == '08:00 - 10:00'])}">
+                  <small style="color: #666;">Por asignar</small>
+                </th:block>
+              </td>
+              <!-- Martes -->
+              <td class="class-cell instructor">
+                <th:block th:each="instructor : ${todosInstructores}">
+                  <th:block th:if="${instructor.diaSemana == 'Martes' && instructor.horario == '08:00 - 10:00'}">
+                    <strong th:text="${instructor.claseAsignada}">Clase</strong><br>
+                    <small>
+                      Instructor: <span th:text="${instructor.nombre + ' ' + instructor.apellido}"></span>
+                      <span th:if="${instructor.especialidad != null}">(<span th:text="${instructor.especialidad}"></span>)</span>
+                    </small>
+                  </th:block>
+                </th:block>
+                <th:block th:if="${#lists.isEmpty(todosInstructores.?[diaSemana == 'Martes' && horario == '08:00 - 10:00'])}">
+                  <small style="color: #666;">Por asignar</small>
+                </th:block>
+              </td>
+              <!-- Miércoles -->
+              <td class="class-cell instructor">
+                <th:block th:each="instructor : ${todosInstructores}">
+                  <th:block th:if="${instructor.diaSemana == 'Miércoles' && instructor.horario == '08:00 - 10:00'}">
+                    <strong th:text="${instructor.claseAsignada}">Clase</strong><br>
+                    <small>
+                      Instructor: <span th:text="${instructor.nombre + ' ' + instructor.apellido}"></span>
+                      <span th:if="${instructor.especialidad != null}">(<span th:text="${instructor.especialidad}"></span>)</span>
+                    </small>
+                  </th:block>
+                </th:block>
+                <th:block th:if="${#lists.isEmpty(todosInstructores.?[diaSemana == 'Miércoles' && horario == '08:00 - 10:00'])}">
+                  <small style="color: #666;">Por asignar</small>
+                </th:block>
+              </td>
+              <!-- Jueves -->
+              <td class="class-cell instructor">
+                <th:block th:each="instructor : ${todosInstructores}">
+                  <th:block th:if="${instructor.diaSemana == 'Jueves' && instructor.horario == '08:00 - 10:00'}">
+                    <strong th:text="${instructor.claseAsignada}">Clase</strong><br>
+                    <small>
+                      Instructor: <span th:text="${instructor.nombre + ' ' + instructor.apellido}"></span>
+                      <span th:if="${instructor.especialidad != null}">(<span th:text="${instructor.especialidad}"></span>)</span>
+                    </small>
+                  </th:block>
+                </th:block>
+                <th:block th:if="${#lists.isEmpty(todosInstructores.?[diaSemana == 'Jueves' && horario == '08:00 - 10:00'])}">
+                  <small style="color: #666;">Por asignar</small>
+                </th:block>
+              </td>
+              <!-- Viernes -->
+              <td class="class-cell instructor">
+                <th:block th:each="instructor : ${todosInstructores}">
+                  <th:block th:if="${instructor.diaSemana == 'Viernes' && instructor.horario == '08:00 - 10:00'}">
+                    <strong th:text="${instructor.claseAsignada}">Clase</strong><br>
+                    <small>
+                      Instructor: <span th:text="${instructor.nombre + ' ' + instructor.apellido}"></span>
+                      <span th:if="${instructor.especialidad != null}">(<span th:text="${instructor.especialidad}"></span>)</span>
+                    </small>
+                  </th:block>
+                </th:block>
+                <th:block th:if="${#lists.isEmpty(todosInstructores.?[diaSemana == 'Viernes' && horario == '08:00 - 10:00'])}">
+                  <small style="color: #666;">Por asignar</small>
+                </th:block>
+              </td>
+              <!-- Sábado -->
+              <td class="class-cell instructor">
+                <th:block th:each="instructor : ${todosInstructores}">
+                  <th:block th:if="${instructor.diaSemana == 'Sábado' && instructor.horario == '08:00 - 10:00'}">
+                    <strong th:text="${instructor.claseAsignada}">Clase</strong><br>
+                    <small>
+                      Instructor: <span th:text="${instructor.nombre + ' ' + instructor.apellido}"></span>
+                      <span th:if="${instructor.especialidad != null}">(<span th:text="${instructor.especialidad}"></span>)</span>
+                    </small>
+                  </th:block>
+                </th:block>
+                <th:block th:if="${#lists.isEmpty(todosInstructores.?[diaSemana == 'Sábado' && horario == '08:00 - 10:00'])}">
+                  <small style="color: #666;">Por asignar</small>
+                </th:block>
+              </td>
+            </tr>
+
+            <!-- Horario 10:00 - 12:00 -->
+            <tr>
+              <td class="time-cell">10:00 - 12:00</td>
+              <!-- Lunes -->
+              <td class="class-cell instructor">
+                <th:block th:each="instructor : ${todosInstructores}">
+                  <th:block th:if="${instructor.diaSemana == 'Lunes' && instructor.horario == '10:00 - 12:00'}">
+                    <strong th:text="${instructor.claseAsignada}">Clase</strong><br>
+                    <small>
+                      Instructor: <span th:text="${instructor.nombre + ' ' + instructor.apellido}"></span>
+                      <span th:if="${instructor.especialidad != null}">(<span th:text="${instructor.especialidad}"></span>)</span>
+                    </small>
+                  </th:block>
+                </th:block>
+                <th:block th:if="${#lists.isEmpty(todosInstructores.?[diaSemana == 'Lunes' && horario == '10:00 - 12:00'])}">
+                  <small style="color: #666;">Por asignar</small>
+                </th:block>
+              </td>
+              <!-- Martes -->
+              <td class="class-cell instructor">
+                <th:block th:each="instructor : ${todosInstructores}">
+                  <th:block th:if="${instructor.diaSemana == 'Martes' && instructor.horario == '10:00 - 12:00'}">
+                    <strong th:text="${instructor.claseAsignada}">Clase</strong><br>
+                    <small>
+                      Instructor: <span th:text="${instructor.nombre + ' ' + instructor.apellido}"></span>
+                      <span th:if="${instructor.especialidad != null}">(<span th:text="${instructor.especialidad}"></span>)</span>
+                    </small>
+                  </th:block>
+                </th:block>
+                <th:block th:if="${#lists.isEmpty(todosInstructores.?[diaSemana == 'Martes' && horario == '10:00 - 12:00'])}">
+                  <small style="color: #666;">Por asignar</small>
+                </th:block>
+              </td>
+              <!-- Miércoles -->
+              <td class="class-cell instructor">
+                <th:block th:each="instructor : ${todosInstructores}">
+                  <th:block th:if="${instructor.diaSemana == 'Miércoles' && instructor.horario == '10:00 - 12:00'}">
+                    <strong th:text="${instructor.claseAsignada}">Clase</strong><br>
+                    <small>
+                      Instructor: <span th:text="${instructor.nombre + ' ' + instructor.apellido}"></span>
+                      <span th:if="${instructor.especialidad != null}">(<span th:text="${instructor.especialidad}"></span>)</span>
+                    </small>
+                  </th:block>
+                </th:block>
+                <th:block th:if="${#lists.isEmpty(todosInstructores.?[diaSemana == 'Miércoles' && horario == '10:00 - 12:00'])}">
+                  <small style="color: #666;">Por asignar</small>
+                </th:block>
+              </td>
+              <!-- Jueves -->
+              <td class="class-cell instructor">
+                <th:block th:each="instructor : ${todosInstructores}">
+                  <th:block th:if="${instructor.diaSemana == 'Jueves' && instructor.horario == '10:00 - 12:00'}">
+                    <strong th:text="${instructor.claseAsignada}">Clase</strong><br>
+                    <small>
+                      Instructor: <span th:text="${instructor.nombre + ' ' + instructor.apellido}"></span>
+                      <span th:if="${instructor.especialidad != null}">(<span th:text="${instructor.especialidad}"></span>)</span>
+                    </small>
+                  </th:block>
+                </th:block>
+                <th:block th:if="${#lists.isEmpty(todosInstructores.?[diaSemana == 'Jueves' && horario == '10:00 - 12:00'])}">
+                  <small style="color: #666;">Por asignar</small>
+                </th:block>
+              </td>
+              <!-- Viernes -->
+              <td class="class-cell instructor">
+                <th:block th:each="instructor : ${todosInstructores}">
+                  <th:block th:if="${instructor.diaSemana == 'Viernes' && instructor.horario == '10:00 - 12:00'}">
+                    <strong th:text="${instructor.claseAsignada}">Clase</strong><br>
+                    <small>
+                      Instructor: <span th:text="${instructor.nombre + ' ' + instructor.apellido}"></span>
+                      <span th:if="${instructor.especialidad != null}">(<span th:text="${instructor.especialidad}"></span>)</span>
+                    </small>
+                  </th:block>
+                </th:block>
+                <th:block th:if="${#lists.isEmpty(todosInstructores.?[diaSemana == 'Viernes' && horario == '10:00 - 12:00'])}">
+                  <small style="color: #666;">Por asignar</small>
+                </th:block>
+              </td>
+              <!-- Sábado -->
+              <td class="class-cell instructor">
+                <th:block th:each="instructor : ${todosInstructores}">
+                  <th:block th:if="${instructor.diaSemana == 'Sábado' && instructor.horario == '10:00 - 12:00'}">
+                    <strong th:text="${instructor.claseAsignada}">Clase</strong><br>
+                    <small>
+                      Instructor: <span th:text="${instructor.nombre + ' ' + instructor.apellido}"></span>
+                      <span th:if="${instructor.especialidad != null}">(<span th:text="${instructor.especialidad}"></span>)</span>
+                    </small>
+                  </th:block>
+                </th:block>
+                <th:block th:if="${#lists.isEmpty(todosInstructores.?[diaSemana == 'Sábado' && horario == '10:00 - 12:00'])}">
+                  <small style="color: #666;">Por asignar</small>
+                </th:block>
+              </td>
+            </tr>
+
+            <!-- Horario 14:00 - 16:00 -->
+            <tr>
+              <td class="time-cell">14:00 - 16:00</td>
+              <!-- Lunes -->
+              <td class="class-cell instructor">
+                <th:block th:each="instructor : ${todosInstructores}">
+                  <th:block th:if="${instructor.diaSemana == 'Lunes' && instructor.horario == '14:00 - 16:00'}">
+                    <strong th:text="${instructor.claseAsignada}">Clase</strong><br>
+                    <small>
+                      Instructor: <span th:text="${instructor.nombre + ' ' + instructor.apellido}"></span>
+                      <span th:if="${instructor.especialidad != null}">(<span th:text="${instructor.especialidad}"></span>)</span>
+                    </small>
+                  </th:block>
+                </th:block>
+                <th:block th:if="${#lists.isEmpty(todosInstructores.?[diaSemana == 'Lunes' && horario == '14:00 - 16:00'])}">
+                  <small style="color: #666;">Por asignar</small>
+                </th:block>
+              </td>
+              <!-- Martes -->
+              <td class="class-cell instructor">
+                <th:block th:each="instructor : ${todosInstructores}">
+                  <th:block th:if="${instructor.diaSemana == 'Martes' && instructor.horario == '14:00 - 16:00'}">
+                    <strong th:text="${instructor.claseAsignada}">Clase</strong><br>
+                    <small>
+                      Instructor: <span th:text="${instructor.nombre + ' ' + instructor.apellido}"></span>
+                      <span th:if="${instructor.especialidad != null}">(<span th:text="${instructor.especialidad}"></span>)</span>
+                    </small>
+                  </th:block>
+                </th:block>
+                <th:block th:if="${#lists.isEmpty(todosInstructores.?[diaSemana == 'Martes' && horario == '14:00 - 16:00'])}">
+                  <small style="color: #666;">Por asignar</small>
+                </th:block>
+              </td>
+              <!-- Miércoles -->
+              <td class="class-cell instructor">
+                <th:block th:each="instructor : ${todosInstructores}">
+                  <th:block th:if="${instructor.diaSemana == 'Miércoles' && instructor.horario == '14:00 - 16:00'}">
+                    <strong th:text="${instructor.claseAsignada}">Clase</strong><br>
+                    <small>
+                      Instructor: <span th:text="${instructor.nombre + ' ' + instructor.apellido}"></span>
+                      <span th:if="${instructor.especialidad != null}">(<span th:text="${instructor.especialidad}"></span>)</span>
+                    </small>
+                  </th:block>
+                </th:block>
+                <th:block th:if="${#lists.isEmpty(todosInstructores.?[diaSemana == 'Miércoles' && horario == '14:00 - 16:00'])}">
+                  <small style="color: #666;">Por asignar</small>
+                </th:block>
+              </td>
+              <!-- Jueves -->
+              <td class="class-cell instructor">
+                <th:block th:each="instructor : ${todosInstructores}">
+                  <th:block th:if="${instructor.diaSemana == 'Jueves' && instructor.horario == '14:00 - 16:00'}">
+                    <strong th:text="${instructor.claseAsignada}">Clase</strong><br>
+                    <small>
+                      Instructor: <span th:text="${instructor.nombre + ' ' + instructor.apellido}"></span>
+                      <span th:if="${instructor.especialidad != null}">(<span th:text="${instructor.especialidad}"></span>)</span>
+                    </small>
+                  </th:block>
+                </th:block>
+                <th:block th:if="${#lists.isEmpty(todosInstructores.?[diaSemana == 'Jueves' && horario == '14:00 - 16:00'])}">
+                  <small style="color: #666;">Por asignar</small>
+                </th:block>
+              </td>
+              <!-- Viernes -->
+              <td class="class-cell instructor">
+                <th:block th:each="instructor : ${todosInstructores}">
+                  <th:block th:if="${instructor.diaSemana == 'Viernes' && instructor.horario == '14:00 - 16:00'}">
+                    <strong th:text="${instructor.claseAsignada}">Clase</strong><br>
+                    <small>
+                      Instructor: <span th:text="${instructor.nombre + ' ' + instructor.apellido}"></span>
+                      <span th:if="${instructor.especialidad != null}">(<span th:text="${instructor.especialidad}"></span>)</span>
+                    </small>
+                  </th:block>
+                </th:block>
+                <th:block th:if="${#lists.isEmpty(todosInstructores.?[diaSemana == 'Viernes' && horario == '14:00 - 16:00'])}">
+                  <small style="color: #666;">Por asignar</small>
+                </th:block>
+              </td>
+              <!-- Sábado -->
+              <td class="class-cell instructor">
+                <th:block th:each="instructor : ${todosInstructores}">
+                  <th:block th:if="${instructor.diaSemana == 'Sábado' && instructor.horario == '14:00 - 16:00'}">
+                    <strong th:text="${instructor.claseAsignada}">Clase</strong><br>
+                    <small>
+                      Instructor: <span th:text="${instructor.nombre + ' ' + instructor.apellido}"></span>
+                      <span th:if="${instructor.especialidad != null}">(<span th:text="${instructor.especialidad}"></span>)</span>
+                    </small>
+                  </th:block>
+                </th:block>
+                <th:block th:if="${#lists.isEmpty(todosInstructores.?[diaSemana == 'Sábado' && horario == '14:00 - 16:00'])}">
+                  <small style="color: #666;">Por asignar</small>
+                </th:block>
+              </td>
+            </tr>
+
+            <!-- Horario 16:00 - 18:00 -->
+            <tr>
+              <td class="time-cell">16:00 - 18:00</td>
+              <!-- Lunes -->
+              <td class="class-cell instructor">
+                <th:block th:each="instructor : ${todosInstructores}">
+                  <th:block th:if="${instructor.diaSemana == 'Lunes' && instructor.horario == '16:00 - 18:00'}">
+                    <strong th:text="${instructor.claseAsignada}">Clase</strong><br>
+                    <small>
+                      Instructor: <span th:text="${instructor.nombre + ' ' + instructor.apellido}"></span>
+                      <span th:if="${instructor.especialidad != null}">(<span th:text="${instructor.especialidad}"></span>)</span>
+                    </small>
+                  </th:block>
+                </th:block>
+                <th:block th:if="${#lists.isEmpty(todosInstructores.?[diaSemana == 'Lunes' && horario == '16:00 - 18:00'])}">
+                  <small style="color: #666;">Por asignar</small>
+                </th:block>
+              </td>
+              <!-- Martes -->
+              <td class="class-cell instructor">
+                <th:block th:each="instructor : ${todosInstructores}">
+                  <th:block th:if="${instructor.diaSemana == 'Martes' && instructor.horario == '16:00 - 18:00'}">
+                    <strong th:text="${instructor.claseAsignada}">Clase</strong><br>
+                    <small>
+                      Instructor: <span th:text="${instructor.nombre + ' ' + instructor.apellido}"></span>
+                      <span th:if="${instructor.especialidad != null}">(<span th:text="${instructor.especialidad}"></span>)</span>
+                    </small>
+                  </th:block>
+                </th:block>
+                <th:block th:if="${#lists.isEmpty(todosInstructores.?[diaSemana == 'Martes' && horario == '16:00 - 18:00'])}">
+                  <small style="color: #666;">Por asignar</small>
+                </th:block>
+              </td>
+              <!-- Miércoles -->
+              <td class="class-cell instructor">
+                <th:block th:each="instructor : ${todosInstructores}">
+                  <th:block th:if="${instructor.diaSemana == 'Miércoles' && instructor.horario == '16:00 - 18:00'}">
+                    <strong th:text="${instructor.claseAsignada}">Clase</strong><br>
+                    <small>
+                      Instructor: <span th:text="${instructor.nombre + ' ' + instructor.apellido}"></span>
+                      <span th:if="${instructor.especialidad != null}">(<span th:text="${instructor.especialidad}"></span>)</span>
+                    </small>
+                  </th:block>
+                </th:block>
+                <th:block th:if="${#lists.isEmpty(todosInstructores.?[diaSemana == 'Miércoles' && horario == '16:00 - 18:00'])}">
+                  <small style="color: #666;">Por asignar</small>
+                </th:block>
+              </td>
+              <!-- Jueves -->
+              <td class="class-cell instructor">
+                <th:block th:each="instructor : ${todosInstructores}">
+                  <th:block th:if="${instructor.diaSemana == 'Jueves' && instructor.horario == '16:00 - 18:00'}">
+                    <strong th:text="${instructor.claseAsignada}">Clase</strong><br>
+                    <small>
+                      Instructor: <span th:text="${instructor.nombre + ' ' + instructor.apellido}"></span>
+                      <span th:if="${instructor.especialidad != null}">(<span th:text="${instructor.especialidad}"></span>)</span>
+                    </small>
+                  </th:block>
+                </th:block>
+                <th:block th:if="${#lists.isEmpty(todosInstructores.?[diaSemana == 'Jueves' && horario == '16:00 - 18:00'])}">
+                  <small style="color: #666;">Por asignar</small>
+                </th:block>
+              </td>
+              <!-- Viernes -->
+              <td class="class-cell instructor">
+                <th:block th:each="instructor : ${todosInstructores}">
+                  <th:block th:if="${instructor.diaSemana == 'Viernes' && instructor.horario == '16:00 - 18:00'}">
+                    <strong th:text="${instructor.claseAsignada}">Clase</strong><br>
+                    <small>
+                      Instructor: <span th:text="${instructor.nombre + ' ' + instructor.apellido}"></span>
+                      <span th:if="${instructor.especialidad != null}">(<span th:text="${instructor.especialidad}"></span>)</span>
+                    </small>
+                  </th:block>
+                </th:block>
+                <th:block th:if="${#lists.isEmpty(todosInstructores.?[diaSemana == 'Viernes' && horario == '16:00 - 18:00'])}">
+                  <small style="color: #666;">Por asignar</small>
+                </th:block>
+              </td>
+              <!-- Sábado -->
+              <td class="class-cell instructor">
+                <th:block th:each="instructor : ${todosInstructores}">
+                  <th:block th:if="${instructor.diaSemana == 'Sábado' && instructor.horario == '16:00 - 18:00'}">
+                    <strong th:text="${instructor.claseAsignada}">Clase</strong><br>
+                    <small>
+                      Instructor: <span th:text="${instructor.nombre + ' ' + instructor.apellido}"></span>
+                      <span th:if="${instructor.especialidad != null}">(<span th:text="${instructor.especialidad}"></span>)</span>
+                    </small>
+                  </th:block>
+                </th:block>
+                <th:block th:if="${#lists.isEmpty(todosInstructores.?[diaSemana == 'Sábado' && horario == '16:00 - 18:00'])}">
+                  <small style="color: #666;">Por asignar</small>
+                </th:block>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="info-box" style="margin-top: 2rem;">
+          <h3 style="margin-top: 0;">📝 Notas para Instructores</h3>
+          <ul>
+            <li>Los horarios se asignan según selección en el registro</li>
+            <li>Total de instructores registrados: <strong th:text="${todosInstructores.size()}">0</strong></li>
+            <li>Cada instructor puede tener múltiples clases asignadas</li>
+            <li>Tiempo de preparación: 15 minutos antes de cada clase</li>
+            <li>Reunión de instructores: Primer domingo de cada mes</li>
+            <li><a href="/registro/instructor">➕ Registrar nuevo instructor</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="legend">
+        <h3>Leyenda</h3>
+        <div class="legend-items">
+          <div class="legend-item">
+            <span class="legend-color nivel-principiante"></span>
+            <span>Principiantes</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-color nivel-intermedio"></span>
+            <span>Intermedios</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-color nivel-avanzado"></span>
+            <span>Avanzados</span>
+          </div>
+          <div class="legend-item" th:if="${tipoUsuario == 'instructor'}">
+            <span class="legend-color instructor"></span>
+            <span>Asignación Instructor</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container footer">
+    <p>© 2025 Roller Speed · Escuela de Patinaje</p>
+  </footer>
+
+  <style>
+    .actions-bar {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .schedule-container {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      overflow-x: auto;
+    }
+    .schedule-title {
+      margin: 0 0 1.5rem 0;
+      color: #333;
+    }
+    .schedule-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 800px;
+    }
+    .schedule-table thead {
+      background: #2c3e50;
+      color: white;
+    }
+    .schedule-table th {
+      padding: 1rem;
+      text-align: center;
+      font-weight: 600;
+    }
+    .schedule-table td {
+      padding: 1rem;
+      border: 1px solid #e0e0e0;
+      vertical-align: top;
+    }
+    .time-cell {
+      background: #ecf0f1;
+      font-weight: 600;
+      text-align: center;
+      color: #2c3e50;
+    }
+    .class-cell {
+      text-align: center;
+    }
+    .class-cell strong {
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+    .class-cell small {
+      color: #666;
+    }
+    .empty-cell {
+      background: #f8f9fa;
+      text-align: center;
+      color: #999;
+    }
+    .nivel-principiante {
+      background: #d1ecf1;
+      color: #0c5460;
+    }
+    .nivel-intermedio {
+      background: #fff3cd;
+      color: #856404;
+    }
+    .nivel-avanzado {
+      background: #d4edda;
+      color: #155724;
+    }
+    .instructor {
+      background: #e7f3ff;
+      color: #004085;
+    }
+    .legend {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+    .legend h3 {
+      margin: 0 0 1rem 0;
+    }
+    .legend-items {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .legend-color {
+      width: 40px;
+      height: 20px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+    }
+    .info-box {
+      padding: 1.5rem;
+      background: #fff3cd;
+      border-radius: 8px;
+      border: 1px solid #ffc107;
+    }
+    .info-box h3 {
+      margin-top: 0;
+    }
+    .info-box ul {
+      margin: 0;
+      padding-left: 1.5rem;
+    }
+    .info-box li {
+      margin-bottom: 0.5rem;
+    }
+  </style>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

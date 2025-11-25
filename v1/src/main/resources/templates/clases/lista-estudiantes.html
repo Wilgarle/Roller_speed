@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="es" data-theme="light" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Lista de Estudiantes — Roller Speed</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="/img/logo.png" type="image/png" />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <nav class="container nav" aria-label="Principal">
+      <a class="brand" href="/">
+        <img src="/img/logo.png" alt="Roller Speed" width="32" height="32" />
+        <span>Roller Speed</span>
+      </a>
+      <button class="hamburger" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="menu">
+        <li class="has-dropdown">
+          <button class="link dropdown-toggle">Corporativo ▼</button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/mision">Misión</a></li>
+            <li><a class="dropdown-item" href="/vision">Visión</a></li>
+            <li><a class="dropdown-item" href="/valores">Valores</a></li>
+            <li><a class="dropdown-item" href="/servicios">Servicios</a></li>
+          </ul>
+        </li>
+        <li><a class="link" href="/eventos">Eventos</a></li>
+        <li class="has-dropdown">
+          <button class="link dropdown-toggle">📝 Registro ▼</button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/registro/estudiante">Inscripción Estudiantes</a></li>
+            <li><a class="dropdown-item" href="/registro/instructor">Inscripción Instructores</a></li>
+          </ul>
+        </li>
+        <li class="has-dropdown">
+          <button class="link dropdown-toggle">👥 Clases ▼</button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/clases/estudiantes">Listar Estudiantes</a></li>
+            <li class="dropdown-divider"></li>
+            <li class="dropdown-header">Horarios</li>
+            <li><a class="dropdown-item" href="/clases/horario/estudiantes">Estudiantes</a></li>
+            <li><a class="dropdown-item" href="/clases/horario/instructores">Instructores</a></li>
+          </ul>
+        </li>
+        <li class="divider" aria-hidden="true"></li>
+        <li><button class="btn-ghost" id="themeToggle" aria-label="Cambiar tema">🌓</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="container section">
+      <header class="section__header">
+        <h1 class="section__title" th:text="${titulo}">👥 Listado de Estudiantes</h1>
+        <p class="muted">Estudiantes registrados en Roller Speed Academy</p>
+      </header>
+
+      <div class="actions-bar">
+        <a href="/registro/estudiante" class="btn">➕ Nuevo Estudiante</a>
+        <a href="/clases/horario/estudiantes" class="btn btn-outline">📅 Ver Horarios</a>
+      </div>
+
+      <!-- Si no hay estudiantes -->
+      <div th:if="${#lists.isEmpty(estudiantes)}" class="empty-state">
+        <div class="empty-icon">📚</div>
+        <h3>No hay estudiantes registrados</h3>
+        <p>Comienza registrando el primer estudiante</p>
+        <a href="/registro/estudiante" class="btn">Registrar Estudiante</a>
+      </div>
+
+      <!-- Tabla de estudiantes -->
+      <div th:if="${!#lists.isEmpty(estudiantes)}" class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre Completo</th>
+              <th>Email</th>
+              <th>Teléfono</th>
+              <th>Nivel</th>
+              <th>Estado</th>
+              <th>Fecha Registro</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="estudiante : ${estudiantes}">
+              <td th:text="${estudiante.idEstudiante}">#001</td>
+              <td>
+                <strong th:text="${estudiante.nombre + ' ' + estudiante.apellido}">Juan Pérez</strong>
+              </td>
+              <td th:text="${estudiante.email}">juan@example.com</td>
+              <td th:text="${estudiante.telefono ?: 'N/A'}">300 123 4567</td>
+              <td>
+                <span class="badge" 
+                      th:classappend="${estudiante.nivel == 'Avanzado' ? 'badge-success' : (estudiante.nivel == 'Intermedio' ? 'badge-warning' : 'badge-info')}"
+                      th:text="${estudiante.nivel}">
+                  Principiante
+                </span>
+              </td>
+              <td>
+                <span class="badge" 
+                      th:classappend="${estudiante.estado == 'Activo' ? 'badge-success' : 'badge-secondary'}"
+                      th:text="${estudiante.estado}">
+                  Activo
+                </span>
+              </td>
+              <td th:text="${#temporals.format(estudiante.fechaRegistro, 'dd/MM/yyyy')}">01/01/2025</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="info-box" style="margin-top: 2rem;">
+        <p><strong>Total de estudiantes:</strong> <span th:text="${#lists.size(estudiantes)}">0</span></p>
+        <p><strong>Estudiantes activos:</strong> <span th:text="${#lists.size(estudiantes.?[estado == 'Activo'])}">0</span></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container footer">
+    <p>© 2025 Roller Speed · Escuela de Patinaje</p>
+  </footer>
+
+  <style>
+    .actions-bar {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .table-container {
+      overflow-x: auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .data-table thead {
+      background: #f8f9fa;
+    }
+    .data-table th {
+      padding: 1rem;
+      text-align: left;
+      font-weight: 600;
+      color: #333;
+      border-bottom: 2px solid #e0e0e0;
+    }
+    .data-table td {
+      padding: 1rem;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .data-table tbody tr:hover {
+      background: #f8f9fa;
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+    .badge-success {
+      background: #d4edda;
+      color: #155724;
+    }
+    .badge-warning {
+      background: #fff3cd;
+      color: #856404;
+    }
+    .badge-info {
+      background: #d1ecf1;
+      color: #0c5460;
+    }
+    .badge-secondary {
+      background: #e2e3e5;
+      color: #383d41;
+    }
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .empty-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+    .empty-state h3 {
+      margin: 0.5rem 0;
+      color: #333;
+    }
+    .empty-state p {
+      color: #666;
+      margin-bottom: 1.5rem;
+    }
+    .info-box {
+      padding: 1.5rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .info-box p {
+      margin: 0;
+    }
+  </style>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>
