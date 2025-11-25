@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!-- Este archivo contiene fragmentos reutilizables de Thymeleaf -->
+</head>
+<body>
+
+<!-- Fragmento del Navbar -->
+<header th:fragment="navbar" class="topbar">
+  <nav class="container nav" aria-label="Principal">
+    <a class="brand" href="/">
+      <img src="/img/logo.png" alt="Roller Speed" width="32" height="32" />
+      <span>Roller Speed</span>
+    </a>
+    <button class="hamburger" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="menu">
+      <!-- Menú Corporativo -->
+      <li class="has-dropdown">
+        <button class="link dropdown-toggle">Corporativo ▼</button>
+      <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/mision">Misión</a></li>
+            <li><a class="dropdown-item" href="/vision">Visión</a></li>
+            <li><a class="dropdown-item" href="/valores">Valores</a></li>
+            <li><a class="dropdown-item" href="/servicios">Servicios</a></li>
+          </ul>
+        </li>
+        
+        <li><a class="link" href="/eventos">Eventos</a></li>      <!-- Menú Registro -->
+      <li class="has-dropdown">
+        <button class="link dropdown-toggle">📝 Registro ▼</button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="/registro/estudiante">Inscripción Estudiantes</a></li>
+          <li><a class="dropdown-item" href="/registro/instructor">Inscripción Instructores</a></li>
+        </ul>
+      </li>
+      
+      <!-- Menú Clases -->
+      <li class="has-dropdown">
+        <button class="link dropdown-toggle">👥 Clases ▼</button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="/clases/estudiantes">Listar Estudiantes</a></li>
+          <li class="dropdown-divider"></li>
+          <li class="dropdown-header">Horarios</li>
+          <li><a class="dropdown-item" href="/clases/horario/estudiantes">Estudiantes</a></li>
+          <li><a class="dropdown-item" href="/clases/horario/instructores">Instructores</a></li>
+        </ul>
+      </li>
+      
+      <li class="divider" aria-hidden="true"></li>
+      <li><button class="btn-ghost" id="themeToggle" aria-label="Cambiar tema">🌓</button></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- Fragmento del Footer -->
+<footer th:fragment="footer" class="container footer">
+  <p>© 2025 Roller Speed · Escuela de Patinaje</p>
+</footer>
+
+<!-- Fragmento de Scripts -->
+<div th:fragment="scripts">
+  <script src="/js/app.js"></script>
+  <script>
+    // Funcionalidad para menú desplegable
+    document.addEventListener('DOMContentLoaded', function() {
+      const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+      
+      dropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const parent = this.parentElement;
+          const isOpen = parent.classList.contains('open');
+          
+          // Cerrar todos los dropdowns
+          document.querySelectorAll('.has-dropdown').forEach(item => {
+            item.classList.remove('open');
+          });
+          
+          // Abrir el actual si estaba cerrado
+          if (!isOpen) {
+            parent.classList.add('open');
+          }
+        });
+      });
+      
+      // Cerrar dropdown al hacer click fuera
+      document.addEventListener('click', function() {
+        document.querySelectorAll('.has-dropdown').forEach(item => {
+          item.classList.remove('open');
+        });
+      });
+    });
+  </script>
+</div>
+
+<style th:fragment="dropdown-styles">
+  .has-dropdown {
+    position: relative;
+  }
+  .dropdown-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-family: inherit;
+  }
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-radius: 8px;
+    padding: 0.5rem 0;
+    min-width: 200px;
+    z-index: 1000;
+    list-style: none;
+    margin: 0.5rem 0 0 0;
+  }
+  .has-dropdown.open .dropdown-menu {
+    display: block;
+  }
+  .dropdown-item {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #333;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .dropdown-item:hover {
+    background: #f8f9fa;
+  }
+  .dropdown-divider {
+    height: 1px;
+    background: #e0e0e0;
+    margin: 0.5rem 0;
+  }
+  .dropdown-header {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+  }
+</style>
+
+</body>
+</html>
