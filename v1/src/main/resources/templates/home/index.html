@@ -25,11 +25,40 @@
         <span></span><span></span><span></span>
       </button>
       <ul class="menu">
-        <li><a class="link" href="/mision">Misión</a></li>
-        <li><a class="link" href="/vision">Visión</a></li>
-        <li><a class="link" href="/valores">Valores</a></li>
-        <li><a class="link" href="/servicios">Servicios</a></li>
+        <!-- Menú Corporativo -->
+        <li class="has-dropdown">
+          <button class="link dropdown-toggle">Corporativo ▼</button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/mision">Misión</a></li>
+            <li><a class="dropdown-item" href="/vision">Visión</a></li>
+            <li><a class="dropdown-item" href="/valores">Valores</a></li>
+            <li><a class="dropdown-item" href="/servicios">Servicios</a></li>
+          </ul>
+        </li>
+        
         <li><a class="link" href="/eventos">Eventos</a></li>
+        
+        <!-- Menú Registro -->
+        <li class="has-dropdown">
+          <button class="link dropdown-toggle">📝 Registro ▼</button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/registro/estudiante">Inscripción Estudiantes</a></li>
+            <li><a class="dropdown-item" href="/registro/instructor">Inscripción Instructores</a></li>
+          </ul>
+        </li>
+        
+        <!-- Menú Clases -->
+        <li class="has-dropdown">
+          <button class="link dropdown-toggle">👥 Clases ▼</button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/clases/estudiantes">Listar Estudiantes</a></li>
+            <li class="dropdown-divider"></li>
+            <li class="dropdown-header">Horarios</li>
+            <li><a class="dropdown-item" href="/clases/horario/estudiantes">Estudiantes</a></li>
+            <li><a class="dropdown-item" href="/clases/horario/instructores">Instructores</a></li>
+          </ul>
+        </li>
+        
         <li class="divider" aria-hidden="true"></li>
         <li><button class="btn-ghost" id="themeToggle" aria-label="Cambiar tema">🌓</button></li>
       </ul>
